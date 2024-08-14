@@ -1,0 +1,172 @@
+https://app.snowflake.com/rseogil/ye24603/w1nKCwChul4A/query
+neethu/Neethu123
+UJNLNGO.BL17633
+UJNLNGO.BL17633
+RSEOGIL.YE24603
+
+
+badge4
+aws us west ore
+https://app.snowflake.com/gauucpz/yjb63815/#/homepage
+neethu/Neethu123
+
+
+
+
+YE24603
+Organization RSEOGIL
+Cloud Amazon Web Services
+Region Canada (Central)
+Edition Enterprise
+Locator  BL98224
+
+
+
+BL17633
+Organization UJNLNGO
+Cloud Amazon Web Services
+Region Canada (Central)
+Edition Enterprise
+Locator RX91911
+
+
+
+
+SFSALESSHARED_SFC_SAMPLaSNOWFLAKE_SAMPLE_DATAES_AWSCACENTRAL1_SAMPLE_DATA
+
+ACME
+ACME_ADMIN
+Neethu.12345
+
+
+Account details
+Account Name ACME
+Account URL https://rseogil-acme.snowflakecomputing.com
+Account Locator COA44121
+Account Locator URL https://coa44121.east-us-2.azure.snowflakecomputing.com
+Edition Enterprise
+Cloud Microsoft Azure
+Region East US 2 (Virginia)
+Admin login
+Admin User Name ACME_ADMIN
+Admin Email Address
+neethumol_tk@infosys.com
+
+
+WDE_INTL_CURRENCIES
+World Data Emporium provides international currencies using International Standards Organization (ISO) guidelines. For use with our Daily Exchange Rate share. 
+
+RSEOGIL.ACME
+Organization RSEOGIL
+Cloud Microsoft Azure
+Region East US 2 (Virginia)
+Edition Enterprise
+Locator COA44121
+
+
+
+-----
+
+COA44121
+---
+AUTO_DATA_UNLIMITED
+ADU_ADMIN/Neethu.123456
+•	Username: ADU_ADMIN 
+•	Dedicated Login URL: https://rseogil-auto_data_unlimited.snowflakecomputing.com
+
+
+---------------------------------------------
+Custom Smoothie Order Form
+
+
+# Import python packages
+import streamlit as st
+from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark.functions import col, when_matched
+# Write directly to the app
+st.title(":cup_with_straw: CPending Smoothie Orders :cup_with_straw:")
+st.write(
+    """Orders that need to filled!
+    """
+)
+
+
+
+
+#name_on_order = st.text_input('Name on Smoothie:')
+#st.write('The name on your Smoothie will be :',name_on_order)
+session = get_active_session()
+#my_dataframe =  session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+my_dataframe = session.table("smoothies.public.orders").filter(col("ORDER_FILLED")==0).collect()
+#st.write(my_dataframe)
+editable_df = st.data_editor(my_dataframe)
+submitted = st.button('Submit')
+if submitted:
+    st.success("Someone clicked the button.", icon = '👍')
+
+
+og_dataset = session.table("smoothies.public.orders")
+edited_dataset = session.create_dataframe(editable_df)
+og_dataset.merge(edited_dataset
+                     , (og_dataset['ORDER_UID'] == edited_dataset['ORDER_UID'])
+                     , [when_matched().update({'ORDER_FILLED': edited_dataset['ORDER_FILLED']})]
+                    )
+    
+	
+---------------------
+Pending Smoothie Orders
+
+# Import python packages
+import streamlit as st
+from snowflake.snowpark.context import get_active_session
+from snowflake.snowpark.functions import col, when_matched
+# Write directly to the app
+st.title(":cup_with_straw: CPending Smoothie Orders :cup_with_straw:")
+st.write(
+    """Orders that need to filled!
+    """
+)
+
+
+session = get_active_session()
+#my_dataframe =  session.table("smoothies.public.fruit_options").select(col('FRUIT_NAME'))
+my_dataframe = session.table("smoothies.public.orders").filter(col("ORDER_FILLED")==0).collect()
+#st.write(my_dataframe)
+if my_dataframe:
+    editable_df = st.data_editor(my_dataframe)
+    submitted = st.button('Submit')
+    if submitted:
+        og_dataset = session.table("smoothies.public.orders")
+        edited_dataset = session.create_dataframe(editable_df)
+        try:
+            og_dataset.merge(edited_dataset
+                     , (og_dataset['ORDER_UID'] == edited_dataset['ORDER_UID'])
+                     , [when_matched().update({'ORDER_FILLED': edited_dataset['ORDER_FILLED']})]
+                    )
+    
+            st.success("Order(s) updated.", icon = '👍')
+        except:
+            st.write("Something went wrong.")
+else:
+    st.success("There are no pending orders right now", icon = '👍')
+    
+    
+
+------
+ACME
+Organization
+RSEOGIL
+Cloud
+Microsoft Azure
+Region
+East US 2 (Virginia)
+Edition
+Enterprise
+Locator
+COA44121
+
+
+BL98224
+    
+    
+    
